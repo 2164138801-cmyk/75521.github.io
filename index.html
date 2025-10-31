@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温馨提示飘窗（慢版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            overflow: hidden;
+            background: #fff;
+        }
+        .tip-window {
+            position: fixed;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-family: "微软雅黑", sans-serif;
+            font-size: 14px;
+            text-align: center;
+            z-index: 9999;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const tips = [
+            '多喝水哦~', '保持微笑呀', '每天都要元气满满',
+            '记得吃水果', '保持好心情', '好好爱自己', '我想你了',
+            '梦想成真', '期待下一次见面', '金榜题名',
+            '顺顺利利', '早点休息', '愿所有烦恼都消失',
+            '别熬夜', '今天过得开心嘛', '天冷了，多穿衣服'
+        ];
+
+        const bgColors = [
+            'lightpink', 'skyblue', 'lightgreen', 'lavender',
+            'lightyellow', 'plum', 'coral', 'bisque', 'aquamarine',
+            'mistyrose', 'honeydew', 'lavenderblush', 'oldlace'
+        ];
+
+        function createTipWindow() {
+            const windowWidth = 200; // 手机上可适当缩小宽度
+            const windowHeight = 50; // 手机上可适当缩小高度
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            const x = Math.random() * (screenWidth - windowWidth);
+            const y = Math.random() * (screenHeight - windowHeight);
+
+            const tip = tips[Math.floor(Math.random() * tips.length)];
+            const bg = bgColors[Math.floor(Math.random() * bgColors.length)];
+
+            const tipWindow = document.createElement('div');
+            tipWindow.className = 'tip-window';
+            tipWindow.style.width = `${windowWidth}px`;
+            tipWindow.style.height = `${windowHeight}px`;
+            tipWindow.style.left = `${x}px`;
+            tipWindow.style.top = `${y}px`;
+            tipWindow.style.backgroundColor = bg;
+            tipWindow.innerHTML = `<p>${tip}</p>`;
+
+            document.body.appendChild(tipWindow);
+
+            // 调整窗口显示时长：从3秒改为5秒（3000→5000）
+            setTimeout(() => {
+                tipWindow.style.opacity = '0';
+                tipWindow.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(tipWindow);
+                }, 500);
+            }, 5000);
+        }
+
+        const windowCount =200; // 减少窗口数量，避免过于密集
+        for (let i = 0; i < windowCount; i++) {
+            // 调整创建间隔：从5毫秒改为50毫秒（i * 5 → i * 50）
+            setTimeout(createTipWindow, i * 50);
+        }
+    </script>
+</body>
+</html>
